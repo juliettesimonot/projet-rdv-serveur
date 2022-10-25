@@ -22,6 +22,17 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+
+    //request
+    implementation("com.squareup.okhttp3:okhttp:+")
+    implementation ("com.google.code.gson:gson:2.9.1")
+
+
+    //relier a la bdd sql
+    runtimeOnly ("mysql:mysql-connector-java")
+    implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation ("org.jetbrains.kotlin:kotlin-reflect")
 }
 
 tasks.withType<KotlinCompile> {
