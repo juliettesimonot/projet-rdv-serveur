@@ -1,75 +1,57 @@
 package com.example.rdv_serveur.model
 
 import java.lang.reflect.Constructor
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 import kotlin.collections.ArrayList
 
-//---------------------------------//
-//beans bdd
-//---------------------------------//
 
-
-data class UserBean(
-    var user_key:Int,
-    var user_pseudo:String,
-    var user_password:String,
-    var user_mail:String,
-)
-
-data class UserTypeBean(
-    var user_type_key:Int,
-    var user_type_name:String
-)
-
-data class HaveTypeBean(
-    var user_type_key:Int,
-    var user_key:Int,
-)
-
-
-@Entity
-@Table(name = "film")
-data class FilmBean(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//Bean retourné en JSON
+data class FilmAPIBean(
     var film_key:Int?=null,
-    var film_title:String?="",
+    var film_name:String?="",
     var film_released_date: String?="",
     var film_description:String?="",
     var film_img:String?="",
     var film_trailer:String?="",
-    var film__display_on: Date?=null,
-    var film_director: String?="",
-    var film_actors: String?="",
-    var film_country: String?="",
+//    var film_display_on: kotlin.collections.List<LocalDateTime>,
+    var film_country: List<String>,
     var film_runtime:String?="",
     var film_imdb_id:String?="",
-    var film_genre:String?=""
-)
-//){
-//    constructor(film_imdb_id:Int, film_trailer:String,film_img:String) : this(0,"", "", "", film_img, URL_VIDEO+film_trailer, null, "", "", "", "", film_imdb_id)
-//}
-
-data class AddListBean(
-    var film_key:Int,
-    var user_key:Int
-)
-
-data class BookBean(
-    var film_key:Int,
-    var user_key:Int
+    var film_genre: List<String>,
+    var film_directors: kotlin.collections.List<String>,
+    var film_actors: List<String>,
 )
 
 
-data class CommentBean(
-    var film_key:Int,
-    var user_key:Int,
-    var comment_description:String,
-    var comment_note:Int
+//beansUtils
+
+data class AllBean(
+    //films
+    var arrayFilmsBeans : ArrayList<FilmBean>,
+
+    //countries
+    var arrayCountryBeans : ArrayList<CountryBean>,
+    var arrayOriginBeans :ArrayList<OriginBean>,
+
+    //genres
+    var arrayGenreBeans: ArrayList<GenreBean>,
+    var arrayHaveBeans :ArrayList<HaveBean>,
+
+    //actors
+    var arrayActorBeans: ArrayList<ActorBean>,
+    var arrayPlayBeans: ArrayList<PlayBean>,
+
+    //film directors
+    var arrayFilmDirectorBeans :ArrayList<FilmDirectorBean>,
+    var arrayMakeBeans:ArrayList<MakeBean>,
+
+
+    //showtimes
+    var arrayShowTimes :ArrayList<ShowTimeBean>
 )
-
-
 
 //---------------------------------//
 // beans appel api themoviedatabase
@@ -84,9 +66,16 @@ data class TMDBFilmBean(
 )
 
 data class TMDBfullMovieDetailsBean(
-    var imdb_id:String, //appeler openemoviedatabase
+    var id:Int,//appeler openemoviedatabase
+    var title:String,
+    var release_date:String,
+    var overview:String,
     var backdrop_path:String,
-    var videos:VideoBean
+    var videos:VideoBean,
+    var runtime: Int,
+    var genres:Array<TMDBGenreBean>,
+    var production_countries: Array<TMDBcountryBean>,
+    var credits:TMDBCreditBean
 )
 
 data class VideoBean(
@@ -97,18 +86,21 @@ data class VideoPathBean(
     var key:String
 )
 
+data class TMDBGenreBean(
+    var name: String
+)
 
+data class TMDBcountryBean(
+    var name: String
+)
 
-//---------------------------------//
-// beans appel api openmoviedatabase
-//---------------------------------//
- data class OMDBFilmBean(
-    var Title:String?="",
-    var Year:String?="",
-    var Runtime:String?="",
-    var Genre:String?="",
-    var Director:String?="",
-    var Actors:String?="",
-    var Plot:String?="",
-    var Country:String?="",
- )
+data class TMDBCreditBean(
+    var cast: kotlin.collections.ArrayList<TMDBPersonBean>,
+    var crew: kotlin.collections.ArrayList<TMDBPersonBean>
+)
+
+data class TMDBPersonBean(
+    var known_for_department: String,
+    var name: String
+)
+
