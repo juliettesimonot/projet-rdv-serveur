@@ -94,16 +94,6 @@ class FilmController(val filmService: FilmService, val filmDirectorService : Fil
 
 
             arrayFilms.forEach{
-//                val currentDate = LocalDateTime.now()
-//                var hour = Random.nextLong(23)+6
-//                var hour1 = Random.nextLong(23)+6
-//                var hour2 = Random.nextLong(23)+6
-//                //random date
-//                val randomDate = currentDate.plusDays(Random.nextLong(15)).plusHours(hour)
-//                val randomDate2 = currentDate.plusDays(Random.nextLong(15)).plusHours(hour1)
-//                val randomDate3 = currentDate.plusDays(Random.nextLong(15)).plusHours(hour2)
-//                val arrayRandomDate = arrayListOf<LocalDateTime>(randomDate, randomDate2, randomDate3)
-
 
                 //film directors
                 var filmDirectorsKey = makeService.loadFilmDirectorsByFilm(it.film_key?:0)

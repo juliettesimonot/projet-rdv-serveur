@@ -23,7 +23,6 @@ object RequestUtils {
 
 
     //GET HTML
-
     fun sendGet(url: String): String {
         println("url : $url")
         //Création de la requête
@@ -40,7 +39,7 @@ object RequestUtils {
     }
 
 
-    //get movies id from imdb
+    //get movies from imdb
     fun loadListTMDB():ArrayList<TMDBFilmBean>{
         //Réaliser la requête.
         val json: String = sendGet(URL_LIST_TMDB)

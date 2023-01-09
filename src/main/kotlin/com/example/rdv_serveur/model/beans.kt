@@ -66,7 +66,7 @@ data class TMDBFilmBean(
 )
 
 data class TMDBfullMovieDetailsBean(
-    var id:Int,//appeler openemoviedatabase
+    var id:Int,
     var title:String,
     var release_date:String,
     var overview:String,
