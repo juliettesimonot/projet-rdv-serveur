@@ -6,8 +6,11 @@ import com.example.rdv_serveur.utils.RequestUtils
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import kotlin.random.Random
 
 @Service
@@ -30,12 +33,22 @@ class FilmService(val filmRep: FilmRepository){
         return arrayFilms.toList()
     }
 
-
     fun loadOneFilm(filmKey:Int):ArrayList<FilmBean>{
         var arrayFilm = arrayListOf<FilmBean>()
         var film = filmRep.findOneFilm(filmKey)
         arrayFilm.add(film)
         return arrayFilm
+    }
+
+
+    fun loadFilmsByDate(date:String):List<FilmBean>{
+        var formatter = SimpleDateFormat("yyyy-MM-dd")
+        var date = formatter.parse(date)
+        var localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        var start = LocalDateTime.of(localDate, LocalTime.MIN)
+        var end = LocalDateTime.of(localDate, LocalTime.MAX)
+        var films = filmRep.findAllByShowTimeDateHourBetween(start, end)
+        return films
     }
 }
 

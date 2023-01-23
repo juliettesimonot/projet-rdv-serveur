@@ -33,6 +33,10 @@ dependencies {
     runtimeOnly ("mysql:mysql-connector-java")
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation ("org.jetbrains.kotlin:kotlin-reflect")
+
+    //spring security
+//    implementation ("org.springframework.security:spring-security-web")
+//    implementation ("org.springframework.security:spring-security-config")
 }
 
 tasks.withType<KotlinCompile> {

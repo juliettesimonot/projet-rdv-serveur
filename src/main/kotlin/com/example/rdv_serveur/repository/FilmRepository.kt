@@ -3,13 +3,20 @@ package com.example.rdv_serveur.repository
 import com.example.rdv_serveur.model.*
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Repository
 interface FilmRepository: JpaRepository<FilmBean, Int> {
+    @Query("SELECT f FROM FilmBean f JOIN ShowTimeBean s ON f.film_key = s.film_key WHERE s.show_time_date_hour BETWEEN :startDate AND :endDate")
+    fun findAllByShowTimeDateHourBetween(startDate: LocalDateTime, endDate: LocalDateTime): List<FilmBean>
+
     @Query("from FilmBean where film_key =?1")
     fun findOneFilm(filmId: Int): FilmBean
+
 }
 
 @Repository
@@ -66,3 +73,4 @@ interface ShowTimeRepository: JpaRepository<ShowTimeBean, Int> {
     fun findShowTimesByFilm(filmId: Int): ArrayList<ShowTimeBean>
 
 }
+

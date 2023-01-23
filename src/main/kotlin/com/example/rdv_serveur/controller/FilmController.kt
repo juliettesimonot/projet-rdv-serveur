@@ -35,7 +35,8 @@ class FilmController(val filmService: FilmService, val filmDirectorService : Fil
     fun getFilmsByDate(@RequestParam(value = "date") date: String) : Any {
         println("/getFilmsByDate")
         try {
-            return transformFilmApiBeanByDate(date)
+//          return transformFilmApiBeanByDate(date)
+            return  transformFilmApiBeanByDate2(date)
         } catch (e: Exception) {
             e.printStackTrace()
             return e
@@ -78,6 +79,16 @@ class FilmController(val filmService: FilmService, val filmDirectorService : Fil
             if(formatDateTime==date){
                 arrayFilmAPIBean.add(transformFilmAPIBean(2, it.film_key?:0)[0])
             }
+        }
+        return arrayFilmAPIBean.distinct()
+    }
+
+    fun transformFilmApiBeanByDate2(date: String):List<FilmAPIBean>{
+        var arrayFilms = filmService.loadFilmsByDate(date)
+        var arrayFilmAPIBean = arrayListOf<FilmAPIBean>()
+        arrayFilms.forEach {
+            arrayFilmAPIBean.add(transformFilmAPIBean(2, it.film_key?:0)[0])
+            println(it)
         }
         return arrayFilmAPIBean.distinct()
     }
